@@ -1,0 +1,17 @@
+services:
+  web:
+    build: .
+    container_name: up-ml
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/usr/src/app
+    command: npm run dev
+    depends_on:
+      - redis
+  redis:
+    image: redis:6.2.10
+    container_name: up-ml-redis
+    ports:
+      - '${REDIS_PORT}:${REDIS_PORT}'
