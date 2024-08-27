@@ -1,7 +1,7 @@
 services:
   web:
     build: .
-    container_name: up-ml
+    container_name: riese-boost
     restart: unless-stopped
     ports:
       - '3000:3000'
@@ -10,8 +10,24 @@ services:
     command: npm run dev
     depends_on:
       - redis
+      - mongo
   redis:
     image: redis:6.2.10
-    container_name: up-ml-redis
+    container_name: riese-boost-redis
     ports:
       - '${REDIS_PORT}:${REDIS_PORT}'
+  mongo:
+    image: mongo
+    container_name: riese-boost-mongo
+    restart: unless-stopped
+    ports:
+      - '${MONGO_PORT}:${MONGO_PORT}'
+  mongo-express:
+    image: mongo-express
+    container_name: riese-boost-mongo-express
+    restart: unless-stopped
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://mongo:${MONGO_PORT}/
+      ME_CONFIG_BASICAUTH: false
