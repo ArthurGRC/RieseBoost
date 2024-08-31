@@ -9,6 +9,6 @@ export const INCORRECT_PASSWORD = {
 }
 
 export const NOT_FOUND_USER = {
-  message: 'Usuário não encontrado, tente novamente',
+  message: 'Usuário não encontrado ou inexistente',
   path: 'email'
 }
