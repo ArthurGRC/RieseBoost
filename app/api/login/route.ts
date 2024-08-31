@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import User from '@/database/models/User';
 import { INCORRECT_PASSWORD, NOT_FOUND_USER } from '@/src/helpers/constants/errors';
 import redis from '@/src/redis';
+import { log } from '@logtail/next';
 
 export async function POST(req: NextRequest) {
   const res = NextResponse;
@@ -22,17 +23,15 @@ export async function POST(req: NextRequest) {
     Cookies.set(process.env.COOKIES_NAME || 'riese_boost', randomSessionId, { expires: 7 });
     redis.set(randomSessionId, JSON.stringify({ id: user?.id, roles: user?.roles, email }));
 
+    log.info('Logged successfully', { email });
     return res.json({ message: 'Ok' }, { status: 200 });
   } catch (error: any) {
     const mapedErrors = Object.keys(error.errors).map((key) => ({
       path: key,
       message: error.errors[key].message,
     }));
+    log.error('Error - api login', { error })
 
     return res.json({ errors: mapedErrors }, { status: 422 });
   }
-}
-
-export async function GET(req: NextRequest) {
-  return NextResponse.json({ message: 'ok' }, { status: 200 });
 }

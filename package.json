@@ -10,6 +10,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@logtail/next": "^0.1.5",
     "@reduxjs/toolkit": "^2.2.7",
     "@types/js-cookie": "^3.0.6",
     "bcrypt": "^5.1.1",
