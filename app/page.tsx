@@ -1,11 +1,11 @@
 'use client';
 
 import Logo from '@/public/assets/logo.png';
-import LoginInput from '@/src/components/Input/login';
-import CircleLoader from '@/src/components/Loaders/CircleLoader';
-import { useCreateUserMutation } from '@/src/services/users';
-import { DataError, DataErrorFiltered } from '@/src/types/redux';
-import { DataFiltered } from '@/src/types/user';
+import LoginInput from '@/components/Input/login';
+import CircleLoader from '@/components/Loaders/CircleLoader';
+import { useCreateUserMutation } from '@/services/users';
+import { DataError, DataErrorFiltered } from '@/types/redux';
+import { DataFiltered } from '@/types/user';
 import Image from 'next/image';
 import { useCallback, useMemo } from 'react';
 
@@ -30,13 +30,18 @@ const Home = () => {
     );
   }, [error]);
 
-  const handleSubmit = useCallback(async (e: any) => {
-    e.preventDefault();
-    const formData = new FormData(e.target as HTMLFormElement);
-    const user: any = Object.fromEntries(formData);
+  const handleSubmit = useCallback(
+    async (e: any) => {
+      e.preventDefault();
+      const formData = new FormData(e.target as HTMLFormElement);
+      const user: any = Object.fromEntries(formData);
 
-    createUser(user).unwrap().then(() => window.location.href = authUrl);
-  }, [createUser, authUrl]);
+      createUser(user)
+        .unwrap()
+        .then(() => (window.location.href = authUrl));
+    },
+    [createUser, authUrl],
+  );
 
   return (
     <div className="flex h-screen flex-col justify-center items-center bg-rbGray">
@@ -72,7 +77,7 @@ const Home = () => {
                 type="submit"
                 className="flex w-full h-14 items-center justify-center rounded-lg bg-rbGray px-3 py-1.5 text-lg font-semibold leading-6 text-white hover:bg-rbFordDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-               { isLoading ? <CircleLoader width={30} height={30} color='#ffff' secondaryColor='rbGray'/> : 'Log in' }
+                {isLoading ? <CircleLoader width={30} height={30} color="#ffff" secondaryColor="rbGray" /> : 'Log in'}
               </button>
             </div>
           </form>

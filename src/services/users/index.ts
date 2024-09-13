@@ -9,7 +9,7 @@ const extendedApi = baseApi.injectEndpoints({
         method: 'POST',
         body: { email, password },
       }),
-      invalidatesTags: ['Users']
+      invalidatesTags: ['Users'],
     }),
   }),
 });

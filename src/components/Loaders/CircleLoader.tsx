@@ -2,7 +2,15 @@
 
 import { Oval } from 'react-loader-spinner';
 
-const CircleLoader = ({ visible = true, height = 80, width = 80, color = 'rbGray', secondaryColor = '' ,wrapperStyle = {}, wrapperClass = '' }) => {
+const CircleLoader = ({
+  visible = true,
+  height = 80,
+  width = 80,
+  color = 'rbGray',
+  secondaryColor = '',
+  wrapperStyle = {},
+  wrapperClass = '',
+}) => {
   return (
     <Oval
       visible={visible}

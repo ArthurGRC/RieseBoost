@@ -15,7 +15,7 @@
     "@types/js-cookie": "^3.0.6",
     "bcrypt": "^5.1.1",
     "ioredis": "^5.4.1",
-    "js-cookie": "^3.0.5",
+    "iron-session": "^8.0.3",
     "mongoose": "^8.5.4",
     "next": "14.2.6",
     "react": "^18",

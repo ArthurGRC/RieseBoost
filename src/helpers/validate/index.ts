@@ -4,6 +4,7 @@ export const userValidate = {
   notNullEmail: 'Email não pode ficar em branco',
   notNullName: 'Nome nao pode ficar em branco',
   wrongEmail: 'Email inválido',
-  wrongPassword: 'Senha inválida, deve conter ao menos 9 caracteres, tendo números, caractere especial e letras maiúsculas',
-  uniqueEmail: 'Email já está sendo utilizado'
-}
+  wrongPassword:
+    'Senha inválida, deve conter ao menos 9 caracteres, tendo números, caractere especial e letras maiúsculas',
+  uniqueEmail: 'Email já está sendo utilizado',
+};

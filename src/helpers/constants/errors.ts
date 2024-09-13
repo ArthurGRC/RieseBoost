@@ -1,14 +1,14 @@
 export const UNAUTHORIZED_ERROR = {
   message: 'Usuário não autorizado',
-  path: 'unauthorized'
-}
+  path: 'unauthorized',
+};
 
 export const INCORRECT_PASSWORD = {
   message: 'Senha incorreta, tente novamente',
-  path: 'password'
-}
+  path: 'password',
+};
 
 export const NOT_FOUND_USER = {
   message: 'Usuário não encontrado ou inexistente',
-  path: 'email'
-}
+  path: 'email',
+};
