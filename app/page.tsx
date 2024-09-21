@@ -1,8 +1,8 @@
 'use client';
 
 import Logo from '@/public/assets/logo.png';
-import LoginInput from '@/components/Input/login';
-import CircleLoader from '@/components/Loaders/CircleLoader';
+import LoginInput from '@/src/components/Input/Login';
+import CircleLoader from '@/src/components/loaders/circleLoader';
 import { useCreateUserMutation } from '@/services/users';
 import { DataError, DataErrorFiltered } from '@/types/redux';
 import { DataFiltered } from '@/types/user';
