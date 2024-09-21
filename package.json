@@ -21,6 +21,7 @@
     "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "embla-carousel-react": "^8.3.0",
     "ioredis": "^5.4.1",
     "iron-session": "^8.0.3",
     "lucide-react": "^0.441.0",
