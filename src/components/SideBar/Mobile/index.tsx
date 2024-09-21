@@ -5,17 +5,21 @@ import Image from 'next/image';
 import Logo from '@/public/assets/logo.png';
 import { LogOut, PanelBottom } from 'lucide-react';
 import { SideBarType } from '@/src/types/sideBar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/Ui/avatar';
 
 const SideBarMobile = ({ paths }: { paths: SideBarType }) => {
   return (
     <div className="sm:hidden flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
-      <header className="sticky top-0 z-30 flex h-14 items-center px-4 border-b bg-background gap-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
+      <header className="sticky top-0 z-30 flex h-14 justify-between items-center px-4 border-b bg-background gap-4 sm:static sm:h-auto sm:border-0  bg-rbGrey">
         <Sheet>
           <SheetTrigger asChild>
-            <Button size="icon" variant="outline" className="sm:hidden">
-              <PanelBottom className="w-5 h-5" />
-              <span className="sr-only">Open / Close menu</span>
-            </Button>
+            <div className="flex gap-2 items-center">
+              <Button size="icon" variant="outline" className="sm:hidden">
+                <PanelBottom className="w-5 h-5" />
+                <span className="sr-only">Open / Close menu</span>
+              </Button>
+              <h1 className="text-white">Menu</h1>
+            </div>
           </SheetTrigger>
           <SheetContent side="left" className="sm:max-x flex flex-col">
             <SheetHeader>
@@ -50,7 +54,10 @@ const SideBarMobile = ({ paths }: { paths: SideBarType }) => {
             </nav>
           </SheetContent>
         </Sheet>
-        <h2>Menu</h2>
+        <Avatar>
+          <AvatarImage src="https://avatars.githubusercontent.com/ArthurGRC" />
+          <AvatarFallback>BR</AvatarFallback>
+        </Avatar>
       </header>
     </div>
   );
