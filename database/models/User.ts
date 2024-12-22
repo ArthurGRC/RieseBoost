@@ -1,45 +1,103 @@
-import { model, schema } from '@/database/index';
-import { userValidate } from '@/src/helpers/validate';
-import bcrypt from 'bcrypt';
-import mongoose from 'mongoose';
+import bcrypt from "bcrypt";
 
-const userSchema = new schema({
-  name: {
-    type: String,
-    required: [true, userValidate.notNullName],
-  },
-  email: {
-    type: String,
-    required: [true, userValidate.notNullEmail],
-    validate: {
-      validator: (value: string) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value),
-      message: userValidate.wrongEmail,
+import { regExValidatePassword } from '@/helpers/validate';
+
+import sequelize from '@/database';
+import { userValidate } from "@/helpers/validate/models";
+import { USER_ROLES } from "@/src/helpers/constants/enums";
+
+const { Model, DataTypes } = require('sequelize');
+
+class User extends Model { }
+
+const cryptPassword = async (user: { password: string }) => {
+  const salt = await bcrypt.genSaltSync(10);
+  user.password = bcrypt.hashSync(user.password, salt);
+};
+
+User.init(
+  {
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: userValidate.notNullName,
+        },
+        notNull: {
+          msg: userValidate.notNullName,
+        },
+      },
     },
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: [true, userValidate.notNullPassword],
-    validate: {
-      validator: (value: string) =>
-        /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*\d)[A-Za-z\d!@#$%^&*(),.?":{}|<>]{9,}$/.test(value),
-      message: userValidate.wrongPassword,
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: {
+        msg: userValidate.uniqueEmail,
+      },
+      validate: {
+        notEmpty: {
+          msg: userValidate.notNullEmail,
+        },
+        notNull: {
+          msg: userValidate.notNullEmail,
+        },
+      },
+    },
+    password: {
+      type: DataTypes.STRING,
+      validate: {
+        is: {
+          args: regExValidatePassword,
+          msg: userValidate.wrongPassword,
+        },
+      },
+    },
+    roles: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: false,
+      validate: {
+        isValidRole(value: string[]) {
+          if (!Array.isArray(value)) {
+            throw new Error(userValidate.invalidRole);
+          }
+
+          const validValues = Object.values(USER_ROLES);
+          if (!value.every(mode => validValues.includes(mode as USER_ROLES))) {
+            throw new Error(userValidate.invalidRole);
+          }
+        },
+        notNull: {
+          msg: userValidate.notNullRole,
+        },
+      },
+    },
+    password_confirmation_token: {
+      type: DataTypes.STRING,
+      allownull: true,
     },
   },
-  roles: {
-    type: [String],
-    required: [true, userValidate.notNullRole],
+  {
+    hooks: {
+      beforeCreate: async (user: { password: string; email: string }) => {
+        if (user.password) {
+          cryptPassword(user);
+        }
+      },
+      beforeUpdate: async (user: { password: string; email: string }) => {
+        if (user.password) {
+          cryptPassword(user);
+        }
+      },
+    },
+    sequelize,
+    modelName: 'User',
+    defaultScope: {
+      attributes: {
+        exclude: ['password', 'password_confirmation_token'],
+      },
+    },
   },
-});
+);
 
-userSchema.pre('save', async function (next) {
-  if (this.isModified('password')) {
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(this.password, saltRounds);
-    this.password = hashedPassword;
-  }
-  next();
-});
-
-const User = mongoose.models.User || model('User', userSchema);
 export default User;
