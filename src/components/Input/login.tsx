@@ -18,16 +18,16 @@ const LoginInput = ({
   };
 }) => {
   return (
-    <div className="my-2">
+    <div className="my-4">
       <input
         id={id}
         name={name}
         type={type}
         autoComplete={autoComplete}
         placeholder={placeholder}
-        className="font-kanit font-semibold block w-full h-12 text-center rounded-xl py-1.5 text-gray-900 outline-none border-transparent rounded-lg"
+        className="font-semibold block w-96 h-12 text-left rounded-full py-1.5 text-rbSeasalt placeholder-rbSeasalt outline-none border-transparent bg-rbGray"
       />
-      {error && <p className="text-center font-kanit font-semibold text-red-500 mt-2">{error.message}</p>}
+      {error && <p className="text-left text-sm font-semibold text-red-500 mt-2">{error.message}</p>}
     </div>
   );
 };

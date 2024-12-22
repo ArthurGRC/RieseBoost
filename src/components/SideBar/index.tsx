@@ -1,17 +1,21 @@
 import SideBarWeb from '@/src/components/SideBar/Web';
 import SideBarMobile from '@/src/components/SideBar/Mobile';
 import { Home, MessageSquareMore, Package, ShoppingBag, Users } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 const SideBar = () => {
+  const path = usePathname();
+  const toGo = (pathToGo: string) => `${path}/${pathToGo}`
+
   const paths = [
     {
       title: 'Inicio',
-      href: '#',
+      href: '/dashboard',
       icon: Home,
     },
     {
       title: 'Vendas',
-      href: '#',
+      href: toGo('orders'),
       icon: ShoppingBag,
     },
     {

@@ -1,4 +1,5 @@
 import GenericCard from '@/components/GenericCard';
+import Carrousel from '@/src/components/GenericCarousel';
 import { DollarSign, Package, Smartphone } from 'lucide-react';
 
 const Home = () => {
@@ -25,7 +26,9 @@ const Home = () => {
         />
       </section>
       <h1 className="text-lg sm:text-xl"> Contas vinculadas </h1>
-      <section></section>
+      <section className="flex justify-center">
+        <Carrousel marketPlaceAccounts={[{}]} />
+      </section>
     </main>
   );
 };

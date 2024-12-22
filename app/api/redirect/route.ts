@@ -15,12 +15,9 @@ export async function GET(req: NextRequest) {
   const { user }: { user: string } = await getIronSession(cookies(), sessionOptions);
   const client: any = JSON.parse((await redis.get(user)) as string);
 
-  if (!roleValidate([USER_ROLES.user], client?.roles)) {
-    return res.json(UNAUTHORIZED_ERROR, { status: 401 });
-  }
-
   try {
     const code = req.nextUrl.searchParams.get('code');
+    console.log('AQUI O CLIENT ====>', client)
 
     const accessToken = await getAccessToken(code as string);
     const refreshToken = await getRefreshToken(accessToken?.data?.refresh_token);
@@ -30,8 +27,9 @@ export async function GET(req: NextRequest) {
       JSON.stringify({ id: client.id, email: client.email, roles: client.roles, refreshToken: refreshToken.data }),
     );
 
-    return res.redirect(`${process.env.APP_URL}/dashboard`);
+    return res.redirect(`${process.env.APP_URL}/dashboard/orders`);
   } catch (error) {
+    console.log('AQUI O EROO',error)
     log.error('Error - api redirect', { error });
     return res.json({ error }, { status: 500 });
   }
