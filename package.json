@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky"
+    "prepare": "husky",
+    "setupDB": "npx --yes sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate"
   },
   "dependencies": {
     "@logtail/next": "^0.1.5",
@@ -21,11 +22,13 @@
     "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "dotenv": "^16.4.7",
     "embla-carousel-react": "^8.3.0",
     "ioredis": "^5.4.1",
     "iron-session": "^8.0.3",
     "lucide-react": "^0.441.0",
     "next": "14.2.6",
+    "pg": "^8.13.1",
     "react": "^18",
     "react-dom": "^18",
     "react-loader-spinner": "^6.1.6",
