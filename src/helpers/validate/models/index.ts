@@ -1,4 +1,4 @@
-export const userValidate = {
+export const customerValidate = {
   notNullRole: 'Role não pode ficar em branco',
   notNullPassword: 'Senha não pode ficar em branco',
   notNullEmail: 'Email não pode ficar em branco',

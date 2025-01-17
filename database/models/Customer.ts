@@ -3,29 +3,29 @@ import bcrypt from "bcrypt";
 import { regExValidatePassword } from '@/helpers/validate';
 
 import sequelize from '@/database';
-import { userValidate } from "@/helpers/validate/models";
-import { USER_ROLES } from "@/src/helpers/constants/enums";
+import { customerValidate } from "@/helpers/validate/models";
+import { CUSTOMER_ROLES } from "@/src/helpers/constants/enums";
 
 const { Model, DataTypes } = require('sequelize');
 
-class User extends Model { }
+class Customer extends Model { }
 
-const cryptPassword = async (user: { password: string }) => {
+const cryptPassword = async (customer: { password: string }) => {
   const salt = await bcrypt.genSaltSync(10);
-  user.password = bcrypt.hashSync(user.password, salt);
+  customer.password = bcrypt.hashSync(customer.password, salt);
 };
 
-User.init(
+Customer.init(
   {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: {
-          msg: userValidate.notNullName,
+          msg: customerValidate.notNullName,
         },
         notNull: {
-          msg: userValidate.notNullName,
+          msg: customerValidate.notNullName,
         },
       },
     },
@@ -33,14 +33,14 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
       unique: {
-        msg: userValidate.uniqueEmail,
+        msg: customerValidate.uniqueEmail,
       },
       validate: {
         notEmpty: {
-          msg: userValidate.notNullEmail,
+          msg: customerValidate.notNullEmail,
         },
         notNull: {
-          msg: userValidate.notNullEmail,
+          msg: customerValidate.notNullEmail,
         },
       },
     },
@@ -49,7 +49,7 @@ User.init(
       validate: {
         is: {
           args: regExValidatePassword,
-          msg: userValidate.wrongPassword,
+          msg: customerValidate.wrongPassword,
         },
       },
     },
@@ -59,16 +59,16 @@ User.init(
       validate: {
         isValidRole(value: string[]) {
           if (!Array.isArray(value)) {
-            throw new Error(userValidate.invalidRole);
+            throw new Error(customerValidate.invalidRole);
           }
 
-          const validValues = Object.values(USER_ROLES);
-          if (!value.every(mode => validValues.includes(mode as USER_ROLES))) {
-            throw new Error(userValidate.invalidRole);
+          const validValues = Object.values(CUSTOMER_ROLES);
+          if (!value.every(mode => validValues.includes(mode as CUSTOMER_ROLES))) {
+            throw new Error(customerValidate.invalidRole);
           }
         },
         notNull: {
-          msg: userValidate.notNullRole,
+          msg: customerValidate.notNullRole,
         },
       },
     },
@@ -79,19 +79,19 @@ User.init(
   },
   {
     hooks: {
-      beforeCreate: async (user: { password: string; email: string }) => {
-        if (user.password) {
-          cryptPassword(user);
+      beforeCreate: async (customer: { password: string; email: string }) => {
+        if (customer.password) {
+          cryptPassword(customer);
         }
       },
-      beforeUpdate: async (user: { password: string; email: string }) => {
-        if (user.password) {
-          cryptPassword(user);
+      beforeUpdate: async (customer: { password: string; email: string }) => {
+        if (customer.password) {
+          cryptPassword(customer);
         }
       },
     },
     sequelize,
-    modelName: 'User',
+    modelName: 'Customer',
     defaultScope: {
       attributes: {
         exclude: ['password', 'password_confirmation_token'],
@@ -100,4 +100,4 @@ User.init(
   },
 );
 
-export default User;
+export default Customer;
