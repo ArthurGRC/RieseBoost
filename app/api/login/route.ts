@@ -4,30 +4,33 @@ import { v4 as uuidv4 } from 'uuid';
 import { log } from '@logtail/next';
 import { cookies } from 'next/headers';
 import { getIronSession } from 'iron-session';
-import User from '@/database/models/User';
+import Customer from '@/database/models/Customer';
 import { INCORRECT_PASSWORD, NOT_FOUND_USER } from '@/src/helpers/constants/errors';
 import redis from '@/src/redis';
 import { sessionOptions } from '@/lib/session';
 
 export async function POST(req: NextRequest) {
   const res = NextResponse;
-  const session: any = await getIronSession(cookies(), sessionOptions);
+  const session: any = await getIronSession(await cookies(), sessionOptions);
 
   try {
     const { email, password } = await req.json();
-    const user = await User.findOne({ email });
+    const customer = await Customer.findOne({ 
+      where: { email },  
+      attributes: ['password', 'id', 'roles']
+    });
 
-    if (!user) return res.json({ errors: [NOT_FOUND_USER] }, { status: 404 });
+    if (!customer) return res.json({ errors: [NOT_FOUND_USER] }, { status: 404 });
 
-    const match = await bcrypt.compare(password, user?.password);
-
+    const match = await bcrypt.compare(password, customer.password)
+    
     if (!match) return res.json({ errors: [INCORRECT_PASSWORD] }, { status: 401 });
 
     const randomSessionId = uuidv4();
     session.user = randomSessionId;
 
     await session.save();
-    await redis.set(randomSessionId, JSON.stringify({ id: user?.id, roles: user?.roles, email }));
+    await redis.set(randomSessionId, JSON.stringify({ id: customer?.id, roles: customer?.roles, email }));
 
     log.info('Logged successfully', { email });
     return res.json({ message: 'Ok' }, { status: 200 });

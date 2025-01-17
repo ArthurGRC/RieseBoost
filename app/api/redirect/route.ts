@@ -1,6 +1,6 @@
 import { sessionOptions } from '@/lib/session';
 import { roleValidate } from '@/src/helpers/authValidate';
-import { USER_ROLES } from '@/src/helpers/constants/enums';
+import { CUSTOMER_ROLES } from '@/src/helpers/constants/enums';
 import { UNAUTHORIZED_ERROR } from '@/src/helpers/constants/errors';
 import redis from '@/src/redis';
 import getAccessToken from '@/src/services/mercadoLivre/POST/accessToken';
@@ -12,12 +12,11 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
   const res = NextResponse;
-  const { user }: { user: string } = await getIronSession(cookies(), sessionOptions);
+  const { user }: { user: string } = await getIronSession(await cookies(), sessionOptions);
   const client: any = JSON.parse((await redis.get(user)) as string);
 
   try {
     const code = req.nextUrl.searchParams.get('code');
-    console.log('AQUI O CLIENT ====>', client)
 
     const accessToken = await getAccessToken(code as string);
     const refreshToken = await getRefreshToken(accessToken?.data?.refresh_token);
@@ -29,7 +28,6 @@ export async function GET(req: NextRequest) {
 
     return res.redirect(`${process.env.APP_URL}/dashboard/orders`);
   } catch (error) {
-    console.log('AQUI O EROO',error)
     log.error('Error - api redirect', { error });
     return res.json({ error }, { status: 500 });
   }
