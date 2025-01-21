@@ -25,7 +25,7 @@ const LoginInput = ({
         type={type}
         autoComplete={autoComplete}
         placeholder={placeholder}
-        className="font-semibold block w-96 h-12 text-left rounded-full py-1.5 text-rbSeasalt placeholder-rbSeasalt outline-none border-transparent bg-rbGray"
+        className="font-semibold block w-96 h-12 text-left rounded-full py-1.5 text-rbSeasalt placeholder-rbSeasalt bg-rbGray focus:ring-0"
       />
       {error && <p className="text-left text-sm font-semibold text-red-500 mt-2">{error.message}</p>}
     </div>

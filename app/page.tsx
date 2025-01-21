@@ -45,14 +45,15 @@ const Home = () => {
   );
 
   return (
-    <div className="flex flex-col justify-center py-14 items-center bg-rbSilver-to-seasalt">
+    <div className="min-h-screen relative bg-rbSilver-to-seasalt">
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
         <div className="flex justify-center items-center pb-20">
           <Image src={Logo} alt="Logotipo" height={100} quality={100} />
-          <h2 className="text-center text-4xl font-bold leading-9 tracking-tight text-rbNight">
+          <h2 className="text-4xl font-bold leading-9 tracking-tight text-rbNight">
             Riese Boost
           </h2>
         </div>
-
+  
         <form id="form" onSubmit={handleSubmit}>
           <LoginInput 
             type='email'
@@ -74,7 +75,7 @@ const Home = () => {
             <CheckBoxInput id='rememberMe' name='rememberMe'/>
             <p className='font-bold text-rbGray'>Permanecer conectado</p>
           </div>
-
+  
           <div className='flex flex-col items-center'>
             <button type='submit' className='flex justify-center items-center w-96 h-16 font-bold bg-rbDavysGray text-rbSeasalt rounded-full mb-2 hover:text-rbLightCoral'>
               {isLoading ? <CircleLoader width={30} height={30} color='#F28C8C' secondaryColor="rbGray" /> : 'ENTRAR'}
@@ -82,8 +83,10 @@ const Home = () => {
             <a href="#" className='text-rbGray text-sm'>Esqueceu sua senha?</a>
           </div>
         </form>
+      </div>
     </div>
   );
+  
 };
 
 export default Home;
