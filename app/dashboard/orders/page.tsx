@@ -5,7 +5,7 @@ import { getIronSession } from 'iron-session';
 import { cookies } from 'next/headers';
 
 const Dashboard = async () => {
-  const { user }: { user: string } = await getIronSession(cookies(), sessionOptions);
+  const { user }: { user: string } = await getIronSession(await cookies(), sessionOptions);
   const client: { id: string; email: string; roles: string[]; refreshToken?: any } = JSON.parse(
     (await redis.get(user)) as string,
   );

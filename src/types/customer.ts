@@ -3,6 +3,7 @@ export type Customer = {
   email?: string,
   password?: string,
   roles?: string[],
+  rememberMe?: string,
 }
 
 export type DataFiltered = {

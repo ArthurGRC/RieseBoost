@@ -32,10 +32,10 @@ const Home = () => {
   }, [error]);
 
   const handleSubmit = useCallback(
-    async (e: any) => {
+    async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const formData = new FormData(e.target as HTMLFormElement);
-      const user: any = Object.fromEntries(formData);
+      const user = Object.fromEntries(formData);
 
       loginCustomer(user)
         .unwrap()
@@ -71,7 +71,7 @@ const Home = () => {
             error={filteredErrors?.password}
           />
           <div className='flex gap-2 items-center pb-24'>
-            <CheckBoxInput id='checkboxLogin' name='checkboxLogin'/>
+            <CheckBoxInput id='rememberMe' name='rememberMe'/>
             <p className='font-bold text-rbGray'>Permanecer conectado</p>
           </div>
 
