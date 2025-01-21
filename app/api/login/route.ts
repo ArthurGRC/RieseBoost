@@ -8,13 +8,16 @@ import Customer from '@/database/models/Customer';
 import { INCORRECT_PASSWORD, NOT_FOUND_USER } from '@/src/helpers/constants/errors';
 import redis from '@/src/redis';
 import { sessionOptions } from '@/lib/session';
+import { oneWeekInSeconds, thirtyDaysInSeconds } from '@/helpers/session';
 
 export async function POST(req: NextRequest) {
   const res = NextResponse;
+  const { email, password, rememberMe } = await req.json();
+  
+  sessionOptions.cookieOptions.maxAge = rememberMe ? thirtyDaysInSeconds : oneWeekInSeconds
   const session: any = await getIronSession(await cookies(), sessionOptions);
 
   try {
-    const { email, password } = await req.json();
     const customer = await Customer.findOne({ 
       where: { email },  
       attributes: ['password', 'id', 'roles']
@@ -35,11 +38,14 @@ export async function POST(req: NextRequest) {
     log.info('Logged successfully', { email });
     return res.json({ message: 'Ok' }, { status: 200 });
   } catch (error: any) {
-    const mapedErrors = Object.keys(error.errors).map((key) => ({
-      path: key,
-      message: error.errors[key].message,
-    }));
     log.error('Error - api login', { error });
+
+    const mapedErrors = error.errors
+    ? Object.keys(error.errors).map((key) => ({
+        path: key,
+        message: error.errors[key].message,
+      }))
+    : [{ path: 'unknown', message: 'An unexpected error occurred.' }];
 
     return res.json({ errors: mapedErrors }, { status: 422 });
   }
