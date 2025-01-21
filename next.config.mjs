@@ -1,5 +1,7 @@
 import { withLogtail } from '@logtail/next';
 
-const nextConfig = {};
+const nextConfig = {
+  serverExternalPackages: ['sequelize', 'sequelize-typescript'],
+};
 
 export default withLogtail(nextConfig);

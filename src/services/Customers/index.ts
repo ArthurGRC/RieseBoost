@@ -3,7 +3,7 @@ import { Customer } from '@/src/types/customer';
 
 const extendedApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    createCustomer: builder.mutation<void, Customer>({
+    loginCustomer: builder.mutation<void, Customer>({
       query: ({ email, password }: Customer) => ({
         url: '/login',
         method: 'POST',
@@ -14,4 +14,4 @@ const extendedApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useCreateCustomerMutation } = extendedApi;
+export const { useLoginCustomerMutation } = extendedApi;
