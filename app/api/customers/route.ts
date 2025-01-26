@@ -1,4 +1,6 @@
 import Customer from '@/database/models/Customer';
+import { UNEXPECTED_ERROR } from '@/helpers/constants/errors';
+import { log } from '@logtail/next';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
@@ -9,10 +11,14 @@ export async function POST(req: NextRequest) {
     const customer = await Customer.create({ name, email, password, roles });
     return res.json(customer, { status: 201 });
   } catch (error: any) {
-    const mapedErrors = error.errors.map(({ message, path }: { message: string, path: string }) => ({
-      key: path,
-      message,
-    }));
+    log.error('Error - api create customer', { error })
+
+    const mapedErrors = error.errors
+    ? Object.keys(error.errors).map((key) => ({
+        path: key,
+        message: error.errors[key].message,
+      }))
+    : [UNEXPECTED_ERROR];
 
     return res.json({ errors: mapedErrors }, { status: 422 });
   }

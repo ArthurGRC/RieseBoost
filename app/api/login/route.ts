@@ -5,7 +5,7 @@ import { log } from '@logtail/next';
 import { cookies } from 'next/headers';
 import { getIronSession } from 'iron-session';
 import Customer from '@/database/models/Customer';
-import { INCORRECT_PASSWORD, NOT_FOUND_USER } from '@/src/helpers/constants/errors';
+import { INCORRECT_PASSWORD, NOT_FOUND_USER, UNEXPECTED_ERROR } from '@/helpers/constants/errors';
 import redis from '@/src/redis';
 import { sessionOptions } from '@/lib/session';
 import { oneWeekInSeconds, thirtyDaysInSeconds } from '@/helpers/session';
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
         path: key,
         message: error.errors[key].message,
       }))
-    : [{ path: 'unknown', message: 'An unexpected error occurred.' }];
+    : [UNEXPECTED_ERROR];
 
     return res.json({ errors: mapedErrors }, { status: 422 });
   }
