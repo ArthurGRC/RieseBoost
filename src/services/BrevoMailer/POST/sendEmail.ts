@@ -1,7 +1,7 @@
 import { log } from "@logtail/next";
 import { handleResponse } from "@/services/REST";
 
-export default async function sendEmail(body: string): Promise<{ status: Number; data?: any; errors?: any }> {
+export default async function sendEmail(body: string): Promise<{ status: number; data?: any; errors?: any }> {
   const path = `${process.env.BREVO_PATH}/email`;
 
   try {
