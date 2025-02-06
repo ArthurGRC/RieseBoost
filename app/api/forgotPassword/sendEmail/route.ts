@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
         templateId: parseInt(process.env.BREVO_TEMPLATE_RESET_PASSWORD as string),
         params: {
           name, 
-          url_redefinicao: `${process.env.APP_URL}/resetPassword?token=${token}`
+          url_redefinicao: `${req.nextUrl.origin}/forgotPassword/resetPassword?token=${token}`
         }
       });
   

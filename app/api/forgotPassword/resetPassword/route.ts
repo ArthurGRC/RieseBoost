@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
 
     return res.json({ errors: [PASSWORD_NOT_EQUAL], data: undefined }, { status: 400 });
   } catch (error: any) {
-    log.error('Error - api sendEmail', { error });
+    log.error('Error - api forgotPassword', { error });
 
     const mapedErrors = error.errors
     ? Object.keys(error.errors).map((key) => ({

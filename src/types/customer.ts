@@ -13,4 +13,10 @@ export type DataFiltered = {
   password?: {
     message: string;
   },
+  confirmPassword?: {
+    message: string
+  },
+  token?: {
+    message: string;
+  }
 };
