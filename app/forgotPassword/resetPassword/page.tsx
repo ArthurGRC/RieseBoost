@@ -2,7 +2,7 @@
 
 import Logo from '@/public/assets/logo.png';
 import LoginInput from '@/components/Input/login';
-import CircleLoader from '@/components/loaders/circleLoader';
+import CircleLoader from '@/components/loaders/CircleLoader';
 import { useResetPasswordMutation } from '@/services/ForgotPassword';
 import { DataError, DataErrorFiltered } from '@/types/redux';
 import { DataFiltered } from '@/types/customer';

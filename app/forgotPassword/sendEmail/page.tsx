@@ -1,8 +1,8 @@
 'use client';
 
 import Logo from '@/public/assets/logo.png';
-import LoginInput from '@/src/components/Input/Login';
-import CircleLoader from '@/src/components/loaders/circleLoader';
+import LoginInput from '@/components/Input/login';
+import CircleLoader from '@/components/loaders/CircleLoader';
 import { useSendEmailMutation } from '@/src/services/ForgotPassword';
 import { DataError, DataErrorFiltered } from '@/types/redux';
 import { DataFiltered } from '@/src/types/customer';

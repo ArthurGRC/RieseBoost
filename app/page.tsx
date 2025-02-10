@@ -3,7 +3,7 @@
 import Logo from '@/public/assets/logo.png';
 import LoginInput from '@/components/Input/login';
 import CheckBoxInput from '@/components/Input/CheckBox';
-import CircleLoader from '@/components/loaders/circleLoader';
+import CircleLoader from '@/components/loaders/CircleLoader';
 import { useLoginCustomerMutation } from '@/src/services/Customers';
 import { DataError, DataErrorFiltered } from '@/types/redux';
 import { DataFiltered } from '@/src/types/customer';

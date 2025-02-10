@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Logo from '@/public/assets/logo.png';
 import { LogOut } from 'lucide-react';
-import { SideBarType } from '@/src/types/sideBar';
+import { SideBarType } from '@/types/sideBar';
 
 const SideBarWeb = ({ paths }: { paths: SideBarType }) => {
   return (
