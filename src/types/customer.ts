@@ -3,6 +3,7 @@ export type Customer = {
   email?: string,
   password?: string,
   roles?: string[],
+  rememberMe?: string,
 }
 
 export type DataFiltered = {
@@ -12,4 +13,10 @@ export type DataFiltered = {
   password?: {
     message: string;
   },
+  confirmPassword?: {
+    message: string
+  },
+  token?: {
+    message: string;
+  }
 };

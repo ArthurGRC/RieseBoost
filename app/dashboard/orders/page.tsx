@@ -5,13 +5,13 @@ import { getIronSession } from 'iron-session';
 import { cookies } from 'next/headers';
 
 const Dashboard = async () => {
-  const { user }: { user: string } = await getIronSession(cookies(), sessionOptions);
-  const client: { id: string; email: string; roles: string[]; refreshToken?: any } = JSON.parse(
-    (await redis.get(user)) as string,
-  );
+  // const { user }: { user: string } = await getIronSession(await cookies(), sessionOptions);
+  // const client: { id: string; email: string; roles: string[]; refreshToken?: any } = JSON.parse(
+  //   (await redis.get(user)) as string,
+  // );
 
-  const { data } = await getOrders(client.refreshToken);
-  const orders = data?.results || [];
+  // const { data } = await getOrders(client.refreshToken);
+  const orders = [{ id: 1, order_items: [ { sale_fee: 10, quantity: 2, item: { title: 'Arthur lindo', } }], total_amount: 10 }]
 
   return (
     <div className="flex justify-center items-center">

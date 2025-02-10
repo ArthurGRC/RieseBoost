@@ -21,6 +21,7 @@ const config: Config = {
         rbRaisinBlack: '#282728',
         rbNight: '#0D0E10',
         rbLightCoral: '#F28C8C',
+        rbRed: '#EA7474',
       },
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],

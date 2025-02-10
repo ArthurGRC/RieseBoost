@@ -2,20 +2,19 @@
 
 import Logo from '@/public/assets/logo.png';
 import LoginInput from '@/src/components/Input/Login';
-import CheckBoxInput from '@/src/components/Input/CheckBox';
 import CircleLoader from '@/src/components/loaders/circleLoader';
-import { useLoginCustomerMutation } from '@/src/services/Customers';
+import { useSendEmailMutation } from '@/src/services/ForgotPassword';
 import { DataError, DataErrorFiltered } from '@/types/redux';
 import { DataFiltered } from '@/src/types/customer';
 import Image from 'next/image';
 import { useCallback, useMemo } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import GenericError from '@/src/components/Error';
 
-const Home = () => {
-  const state = Math.floor(Math.random() * 100000);
-  const authUrl = `https://auth.mercadolivre.com.br/authorization?response_type=code&client_id=${process.env.NEXT_PUBLIC_APP_ID}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&state=${state}`;
-  const [loginCustomer, { error, isLoading }] = useLoginCustomerMutation();
+const SendEmail = () => {
+  const route = useRouter();
+  const [sendEmail, { error, isLoading }] = useSendEmailMutation();
 
   const filteredErrors: DataFiltered = useMemo(() => {
     if (!error) return {};
@@ -39,21 +38,24 @@ const Home = () => {
       const formData = new FormData(e.target as HTMLFormElement);
       const user = Object.fromEntries(formData);
 
-      loginCustomer(user)
+      sendEmail(user)
         .unwrap()
-        .then(() => (window.location.href = authUrl));
+        .then(() => route.push('/forgotPassword/sendEmail/checkEmail'));
     },
-    [loginCustomer, authUrl],
+    [sendEmail],
   );
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-rbSilver-to-seasalt">
       <div className="flex flex-col items-center text-center">
-        <div className="flex items-center pb-20">
-          <Image src={Logo} alt="Logotipo" height={100} quality={100} />
-          <h2 className="text-4xl font-bold leading-9 tracking-tight text-rbNight">
-            Riese Boost
-          </h2>
+        <div className="flex flex-col items-center pb-20">
+          <div className='flex items-center'>
+            <Image src={Logo} alt="Logotipo" height={100} quality={100} />
+            <h2 className="text-4xl font-bold leading-9 tracking-tight text-rbNight">
+              Esqueceu sua senha?
+            </h2>
+          </div>
+          <p className='text-sm text-rbGray'>Crie uma nova agora mesmo, é super fácil!</p>
         </div>
   
         <form id="form" onSubmit={handleSubmit} className="w-96">
@@ -65,29 +67,16 @@ const Home = () => {
             autoComplete='email'
             error={filteredErrors?.email}
           />
-          <LoginInput 
-            type='password'
-            name='password'
-            id='password'
-            placeholder='Senha'
-            autoComplete='currentPassword'
-            error={filteredErrors?.password}
-          />
 
           <GenericError error={!filteredErrors && error}/>
-
-          <div className='flex gap-2 items-center pb-24'>
-            <CheckBoxInput id='rememberMe' name='rememberMe'/>
-            <p className='font-bold text-rbGray'>Permanecer conectado</p>
-          </div>
   
-          <div className='flex flex-col items-center'>
+          <div className='flex flex-col items-center pt-24'>
             <button type='submit' className='flex justify-center items-center w-80 h-12 font-bold bg-rbDavysGray text-rbSeasalt rounded-full mb-2 hover:text-rbLightCoral'>
-              {isLoading ? <CircleLoader width={30} height={30} color='#F28C8C' secondaryColor="rbGray" /> : 'Entrar'}
+              {isLoading ? <CircleLoader width={30} height={30} color='#F28C8C' secondaryColor="rbGray" /> : 'Recuperar Senha'}
             </button>
-            <Link href='/forgotPassword/sendEmail' className='text-rbGray text-sm'>
-              Esqueceu sua senha?
-            </Link>
+            <Link href="/" className="text-rbLightCoral text-sm">
+              Voltar para o login
+            </Link>          
           </div>
         </form>
       </div>
@@ -96,4 +85,4 @@ const Home = () => {
   
 };
 
-export default Home;
+export default SendEmail;
