@@ -1,15 +1,15 @@
 'use client';
 
 import Logo from '@/public/assets/logo.png';
-import LoginInput from '@/src/components/Input/Login';
-import CircleLoader from '@/src/components/loaders/circleLoader';
-import { useResetPasswordMutation } from '@/src/services/ForgotPassword';
+import LoginInput from '@/components/Input/login';
+import CircleLoader from '@/components/loaders/circleLoader';
+import { useResetPasswordMutation } from '@/services/ForgotPassword';
 import { DataError, DataErrorFiltered } from '@/types/redux';
-import { DataFiltered } from '@/src/types/customer';
+import { DataFiltered } from '@/types/customer';
 import Image from 'next/image';
 import { useCallback, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import GenericError from '@/src/components/Error';
+import GenericError from '@/components/Error';
 
 const ResetPassword = () => {
   const route = useRouter();

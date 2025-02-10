@@ -1,9 +1,9 @@
 'use client';
 
 import Logo from '@/public/assets/logo.png';
-import LoginInput from '@/src/components/Input/Login';
-import CheckBoxInput from '@/src/components/Input/CheckBox';
-import CircleLoader from '@/src/components/loaders/circleLoader';
+import LoginInput from '@/components/Input/login';
+import CheckBoxInput from '@/components/Input/CheckBox';
+import CircleLoader from '@/components/loaders/circleLoader';
 import { useLoginCustomerMutation } from '@/src/services/Customers';
 import { DataError, DataErrorFiltered } from '@/types/redux';
 import { DataFiltered } from '@/src/types/customer';

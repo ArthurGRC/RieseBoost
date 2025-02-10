@@ -1,5 +1,4 @@
 import SideBarWeb from '@/src/components/SideBar/Web';
-import SideBarMobile from '@/src/components/SideBar/Mobile';
 import { Home, MessageSquareMore, Package, ShoppingBag, Users } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
@@ -38,7 +37,6 @@ const SideBar = () => {
   return (
     <div className="flex w-full flex-col">
       <SideBarWeb paths={paths} />
-      <SideBarMobile paths={paths} />
     </div>
   );
 };
