@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
+import { useState } from 'react';
 
-const LoginInput = ({
+function LoginInput({
   type,
   name,
   id,
@@ -17,14 +17,14 @@ const LoginInput = ({
   error?: {
     message: string;
   };
-}) => {
+}) {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
 
   return (
     <div className="my-4">
-      <div className='relative'>
+      <div className="relative">
         <input
           id={id}
           name={name}
@@ -33,7 +33,7 @@ const LoginInput = ({
           placeholder={placeholder}
           className="font-semibold block w-96 h-12 text-left rounded-full py-1.5 pl-4 pr-12 text-rbSeasalt placeholder-rbSeasalt bg-rbGray focus:ring-0"
         />
-      
+
         {type === 'password' && (
           <button
             type="button"
@@ -48,6 +48,6 @@ const LoginInput = ({
       {error && <p className="text-left text-sm font-semibold text-rbRed mt-2">{error.message}</p>}
     </div>
   );
-};
+}
 
 export default LoginInput;

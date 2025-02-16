@@ -1,18 +1,19 @@
 'use client';
 
-import Logo from '@/public/assets/logo.png';
-import LoginInput from '@/components/Input/login';
-import CheckBoxInput from '@/components/Input/CheckBox';
-import CircleLoader from '@/components/loaders/CircleLoader';
-import { useLoginCustomerMutation } from '@/src/services/Customers';
-import { DataError, DataErrorFiltered } from '@/types/redux';
-import { DataFiltered } from '@/src/types/customer';
 import Image from 'next/image';
-import { useCallback, useMemo } from 'react';
 import Link from 'next/link';
-import GenericError from '@/src/components/Error';
+import { useCallback, useMemo } from 'react';
 
-const Home = () => {
+import CheckBoxInput from '@/components/Input/CheckBox';
+import LoginInput from '@/components/Input/login';
+import CircleLoader from '@/components/loaders/CircleLoader';
+import Logo from '@/public/assets/logo.png';
+import GenericError from '@/src/components/Error';
+import { useLoginCustomerMutation } from '@/src/services/Customers';
+import { DataFiltered } from '@/src/types/customer';
+import { DataError, DataErrorFiltered } from '@/types/redux';
+
+function Home() {
   const state = Math.floor(Math.random() * 100000);
   const authUrl = `https://auth.mercadolivre.com.br/authorization?response_type=code&client_id=${process.env.NEXT_PUBLIC_APP_ID}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&state=${state}`;
   const [loginCustomer, { error, isLoading }] = useLoginCustomerMutation();
@@ -41,7 +42,9 @@ const Home = () => {
 
       loginCustomer(user)
         .unwrap()
-        .then(() => (window.location.href = authUrl));
+        .then(() => {
+          window.location.href = authUrl;
+        });
     },
     [loginCustomer, authUrl],
   );
@@ -51,41 +54,42 @@ const Home = () => {
       <div className="flex flex-col items-center text-center">
         <div className="flex items-center pb-20">
           <Image src={Logo} alt="Logotipo" height={100} quality={100} />
-          <h2 className="text-4xl font-bold leading-9 tracking-tight text-rbNight">
-            Riese Boost
-          </h2>
+          <h2 className="text-4xl font-bold leading-9 tracking-tight text-rbNight">Riese Boost</h2>
         </div>
-  
+
         <form id="form" onSubmit={handleSubmit} className="w-96">
-          <LoginInput 
-            type='email'
-            name='email'
-            id='email'
-            placeholder='Email'
-            autoComplete='email'
+          <LoginInput
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Email"
+            autoComplete="email"
             error={filteredErrors?.email}
           />
-          <LoginInput 
-            type='password'
-            name='password'
-            id='password'
-            placeholder='Senha'
-            autoComplete='currentPassword'
+          <LoginInput
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Senha"
+            autoComplete="currentPassword"
             error={filteredErrors?.password}
           />
 
-          <GenericError error={!filteredErrors && error}/>
+          <GenericError error={!filteredErrors && error} />
 
-          <div className='flex gap-2 items-center pb-24'>
-            <CheckBoxInput id='rememberMe' name='rememberMe'/>
-            <p className='font-bold text-rbGray'>Permanecer conectado</p>
+          <div className="flex gap-2 items-center pb-24">
+            <CheckBoxInput id="rememberMe" name="rememberMe" />
+            <p className="font-bold text-rbGray">Permanecer conectado</p>
           </div>
-  
-          <div className='flex flex-col items-center'>
-            <button type='submit' className='flex justify-center items-center w-80 h-12 font-bold bg-rbDavysGray text-rbSeasalt rounded-full mb-2 hover:text-rbLightCoral'>
-              {isLoading ? <CircleLoader width={30} height={30} color='#F28C8C' secondaryColor="rbGray" /> : 'Entrar'}
+
+          <div className="flex flex-col items-center">
+            <button
+              type="submit"
+              className="flex justify-center items-center w-80 h-12 font-bold bg-rbDavysGray text-rbSeasalt rounded-full mb-2 hover:text-rbLightCoral"
+            >
+              {isLoading ? <CircleLoader width={30} height={30} color="#F28C8C" secondaryColor="rbGray" /> : 'Entrar'}
             </button>
-            <Link href='/forgotPassword/sendEmail' className='text-rbGray text-sm'>
+            <Link href="/forgotPassword/sendEmail" className="text-rbGray text-sm">
               Esqueceu sua senha?
             </Link>
           </div>
@@ -93,7 +97,6 @@ const Home = () => {
       </div>
     </div>
   );
-  
-};
+}
 
 export default Home;

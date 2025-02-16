@@ -1,14 +1,13 @@
-import bcrypt from "bcrypt";
-
-import { regExValidatePassword } from '@/helpers/validate';
+import bcrypt from 'bcrypt';
 
 import sequelize from '@/database';
-import { customerValidate } from "@/helpers/validate/models";
-import { CUSTOMER_ROLES } from "@/src/helpers/constants/enums";
+import { regExValidatePassword } from '@/helpers/validate';
+import { customerValidate } from '@/helpers/validate/models';
+import { CUSTOMER_ROLES } from '@/src/helpers/constants/enums';
 
 const { Model, DataTypes } = require('sequelize');
 
-class Customer extends Model { }
+class Customer extends Model {}
 
 const cryptPassword = async (customer: { password: string }) => {
   const salt = await bcrypt.genSaltSync(10);
@@ -63,7 +62,7 @@ Customer.init(
           }
 
           const validValues = Object.values(CUSTOMER_ROLES);
-          if (!value.every(mode => validValues.includes(mode as CUSTOMER_ROLES))) {
+          if (!value.every((mode) => validValues.includes(mode as CUSTOMER_ROLES))) {
             throw new Error(customerValidate.invalidRole);
           }
         },

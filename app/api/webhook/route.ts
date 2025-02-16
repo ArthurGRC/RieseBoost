@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
   try {
-    const url = req.url;
+    const { url } = req;
     return NextResponse.json({ message: url });
   } catch (err) {
     console.log(err);

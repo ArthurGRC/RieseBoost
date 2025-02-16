@@ -14,15 +14,15 @@ export const NOT_FOUND_USER = {
 };
 
 export const JWT_TOKEN_ERRORS: any = {
-  ['TokenExpiredError']: {
+  TokenExpiredError: {
     message: 'Token expirado',
     path: 'token',
   },
-  ['JsonWebTokenError']: {
+  JsonWebTokenError: {
     message: 'Token inválido',
     path: 'token',
-  }
-}
+  },
+};
 
 export const NOT_FOUND_TOKEN = {
   message: 'Token não encontrado',
@@ -30,11 +30,11 @@ export const NOT_FOUND_TOKEN = {
 };
 
 export const UNEXPECTED_ERROR = {
-  path: 'unknown', 
-  message: 'Um erro inesperado aconteceu. Contate o suporte'
-}
+  path: 'unknown',
+  message: 'Um erro inesperado aconteceu. Contate o suporte',
+};
 
 export const PASSWORD_NOT_EQUAL = {
   path: 'confirmPassword',
-  message: 'A senha preeenchida não é igual'
-}
+  message: 'A senha preeenchida não é igual',
+};

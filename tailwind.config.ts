@@ -1,4 +1,6 @@
+import forms from '@tailwindcss/forms';
 import type { Config } from 'tailwindcss';
+import animate from 'tailwindcss-animate';
 
 const config: Config = {
   darkMode: ['class'],
@@ -11,7 +13,7 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
-        'rbSilver-to-seasalt': 'linear-gradient(to bottom, #C5C6C8 11%, #F8FAFA 100%)'
+        'rbSilver-to-seasalt': 'linear-gradient(to bottom, #C5C6C8 11%, #F8FAFA 100%)',
       },
       colors: {
         rbSeasalt: '#F8FAFA',
@@ -30,9 +32,10 @@ const config: Config = {
         light: '300',
         normal: '400',
         bold: '700',
-      }
+      },
     },
   },
-  plugins: [require('@tailwindcss/forms'), require('tailwindcss-animate')],
+  plugins: [forms, animate],
 };
+
 export default config;

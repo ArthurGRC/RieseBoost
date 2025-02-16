@@ -1,3 +1,77 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["next", "airbnb", "airbnb-typescript/base", "plugin:@typescript-eslint/recommended", "prettier"],
+
+  "plugins": ["@typescript-eslint", "prettier"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "react/prop-types": 0,
+    "no-empty": "off",
+    "react/react-in-jsx-scope": "off",
+    "prettier/prettier": "error",
+    "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }],
+    "jsx-a11y/control-has-associated-label": "off",
+    "import/prefer-default-export": "off",
+    "no-param-reassign": 0,
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "no-nested-ternary": "off",
+    "jsx-a11y/label-has-associated-control": [
+      2,
+      {
+        "labelComponents": ["CustomInputLabel"],
+        "labelAttributes": ["label"],
+        "controlComponents": ["CustomInput"],
+        "depth": 3
+      }
+    ],
+    "@typescript-eslint/naming-convention": "off",
+    "react/require-default-props": "off",
+    "react/button-has-type": [
+      "off",
+      {
+        "reset": "off"
+      }
+    ],
+    "react/no-array-index-key": "off",
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "varsIgnorePattern": ".*",
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "@typescript-eslint/no-var-requires": "off",
+    "react/jsx-props-no-spreading": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "jsx-a11y/heading-has-content": "off",
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "no-await-in-loop": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "array-callback-return": "warn",
+    "@typescript-eslint/no-throw-literal": "warn",
+    "no-useless-catch": "error",
+    "consistent-return": "error",
+    "no-restricted-syntax": "off"
+  }
 }
