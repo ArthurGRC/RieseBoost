@@ -1,16 +1,17 @@
-'use client';
+import Header from '@/components/Header';
+import Sidebar from '@/components/SideBar';
 
-import SideBar from '@/src/components/SideBar';
-import TopBar from '@/src/components/TopBar';
-
-const Layout = ({ children }: { children: React.ReactNode }) => {
+function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <main>
-      <TopBar />
-      <SideBar />
-      {children}
+    <main className="flex h-screen">
+      <Sidebar />
+
+      <div className="flex flex-col flex-1">
+        <Header />
+        <main className="flex-1 overflow-auto">{children}</main>
+      </div>
     </main>
   );
-};
+}
 
 export default Layout;

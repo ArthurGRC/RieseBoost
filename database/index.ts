@@ -1,4 +1,5 @@
 import pg from 'pg';
+
 const { Sequelize } = require('sequelize');
 
 const initSequelize = () => {

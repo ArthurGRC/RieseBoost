@@ -24,7 +24,7 @@ module.exports = {
         type: Sequelize.ARRAY(Sequelize.STRING),
       },
       password: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       password_confirmation_token: {
         type: Sequelize.STRING,
@@ -39,7 +39,7 @@ module.exports = {
       },
       deletedAt: {
         type: Sequelize.DATE,
-      }
+      },
     });
   },
   async down(queryInterface) {

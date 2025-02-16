@@ -1,46 +1,41 @@
+'use client';
+
 import SideBarWeb from '@/src/components/SideBar/Web';
-import SideBarMobile from '@/src/components/SideBar/Mobile';
-import { Home, MessageSquareMore, Package, ShoppingBag, Users } from 'lucide-react';
-import { usePathname } from 'next/navigation';
 
-const SideBar = () => {
-  const path = usePathname();
-  const toGo = (pathToGo: string) => `${path}/${pathToGo}`
-
+function SideBar() {
   const paths = [
     {
-      title: 'Inicio',
-      href: '/dashboard',
-      icon: Home,
+      title: 'Dashboard',
+      href: 'home',
+      icon: 'LayoutDashboard',
+    },
+    {
+      title: 'Estoque',
+      href: 'stock',
+      icon: 'ArchiveRestore',
     },
     {
       title: 'Vendas',
-      href: toGo('orders'),
-      icon: ShoppingBag,
-    },
-    {
-      title: 'Produtos',
-      href: '#',
-      icon: Package,
-    },
-    {
-      title: 'Clientes',
-      href: '#',
-      icon: Users,
+      href: 'sales',
+      icon: 'HandCoins',
     },
     {
       title: 'Mensagens',
-      href: '#',
-      icon: MessageSquareMore,
+      href: 'messages',
+      icon: 'MessagesSquare',
+    },
+    {
+      title: 'Perguntas',
+      href: 'questions',
+      icon: 'MailQuestion',
     },
   ];
 
   return (
-    <div className="flex w-full flex-col">
+    <div className="m-5">
       <SideBarWeb paths={paths} />
-      <SideBarMobile paths={paths} />
     </div>
   );
-};
+}
 
 export default SideBar;

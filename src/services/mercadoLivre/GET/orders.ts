@@ -1,7 +1,7 @@
 export default async function getOrders(data: {
   user_id: string;
   access_token: string;
-}): Promise<{ status: Number; data?: any; errors?: any }> {
+}): Promise<{ status: number; data?: any; errors?: any }> {
   try {
     const path = `${process.env.URL_ML}/orders/search?seller=${data.user_id}&order.status=paid`;
 

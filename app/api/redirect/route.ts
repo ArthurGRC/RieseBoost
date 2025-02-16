@@ -1,14 +1,12 @@
-import { sessionOptions } from '@/lib/session';
-import { roleValidate } from '@/src/helpers/authValidate';
-import { CUSTOMER_ROLES } from '@/src/helpers/constants/enums';
-import { UNAUTHORIZED_ERROR } from '@/src/helpers/constants/errors';
-import redis from '@/src/redis';
-import getAccessToken from '@/src/services/mercadoLivre/POST/accessToken';
-import getRefreshToken from '@/src/services/mercadoLivre/POST/refreshToken';
 import { log } from '@logtail/next';
 import { getIronSession } from 'iron-session';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
+
+import { sessionOptions } from '@/lib/session';
+import redis from '@/src/redis';
+import getAccessToken from '@/src/services/mercadoLivre/POST/accessToken';
+import getRefreshToken from '@/src/services/mercadoLivre/POST/refreshToken';
 
 export async function GET(req: NextRequest) {
   const res = NextResponse;
@@ -26,7 +24,7 @@ export async function GET(req: NextRequest) {
       JSON.stringify({ id: client.id, email: client.email, roles: client.roles, refreshToken: refreshToken.data }),
     );
 
-    return res.redirect(`${process.env.APP_URL}/dashboard/orders`);
+    return res.redirect(`${process.env.APP_URL}/dashboard/home`);
   } catch (error) {
     log.error('Error - api redirect', { error });
     return res.json({ error }, { status: 500 });

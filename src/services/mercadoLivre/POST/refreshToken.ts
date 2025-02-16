@@ -1,6 +1,6 @@
 export default async function getRefreshToken(
   refreshToken: string,
-): Promise<{ status: Number; data: undefined; errors: undefined }> {
+): Promise<{ status: number; data: undefined; errors: undefined }> {
   const path = `${process.env.URL_ML}/oauth/token`;
 
   try {

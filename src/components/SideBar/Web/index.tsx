@@ -1,59 +1,66 @@
-import { Tooltip, TooltipProvider, TooltipContent, TooltipTrigger } from '@/components/Ui/tooltip';
-import Link from 'next/link';
-import Image from 'next/image';
-import Logo from '@/public/assets/logo.png';
-import { LogOut } from 'lucide-react';
-import { SideBarType } from '@/src/types/sideBar';
+'use client';
 
-const SideBarWeb = ({ paths }: { paths: SideBarType }) => {
+import { ArchiveRestore, Bolt, HandCoins, LayoutDashboard, MailQuestion, MessagesSquare } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+import { Tooltip, TooltipProvider, TooltipContent, TooltipTrigger } from '@/components/Ui/tooltip';
+import LogoExtensa from '@/public/assets/logo-branca-extenso.png';
+
+const iconMap: Record<string, any> = {
+  LayoutDashboard,
+  ArchiveRestore,
+  HandCoins,
+  MailQuestion,
+  MessagesSquare,
+};
+
+function SideBarWeb({ paths }: { paths: { title: string; href: string; icon: string }[] }) {
+  const path = usePathname();
+  const currentPath = path.startsWith('/dashboard/') ? path.substring(11) : path;
+
   return (
-    <aside
-      className="fixed inset-y-0 left-0 z-10 hidden w-14 border-r bg-rbGrey
-       sm:flex flex-col"
-    >
-      <nav className="flex flex-col items-center gap-4 px-2 py-5">
-        <TooltipProvider>
-          <Link
-            href="#"
-            className="flex h-9 w-9 shrink-0 items-center justify-center bg-primary text-primary-foreground rounded-full"
-          >
-            <Image src={Logo} alt="Logotipo" height={100} />
-          </Link>
-          {paths?.map((item: any) => (
+    <nav className="w-60 h-full flex flex-col items-center gap-4 px-2 py-5 bg-rbGray rounded-3xl">
+      <TooltipProvider>
+        <Link href="#" className="flex h-9 w-9 items-center justify-center rounded-full mb-5">
+          <Image src={LogoExtensa} alt="Logotipo" className="w-[230px] h-[230px] max-w-none" />
+        </Link>
+        {paths?.map((item) => {
+          const IconComponent = iconMap[item.icon];
+
+          return (
             <Tooltip key={item.title}>
               <TooltipTrigger asChild>
                 <Link
-                  href={item.href}
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-white transition-colors hover:text-rbGray"
+                  href={item?.href}
+                  className={`flex mx-5 items-center h-9 w-full px-3 ${
+                    currentPath === item?.href ? 'rounded-xl bg-rbLightCoral p-6' : ''
+                  } text-white`}
                 >
-                  <item.icon className="h-5 w-5" />
-                  <span className="sr-only">{item.title}</span>
+                  {IconComponent && <IconComponent className="h-8 w-8" />}
+                  <span className="ml-2 whitespace-nowrap">{item.title}</span>
                 </Link>
               </TooltipTrigger>
-              <TooltipContent side="right"> {item.title}</TooltipContent>
+              <TooltipContent side="right">{item.title}</TooltipContent>
             </Tooltip>
-          ))}
-        </TooltipProvider>
-      </nav>
+          );
+        })}
+      </TooltipProvider>
 
-      <nav className="mt-auto flex flex-col items-center gap-4 px-2 py-5">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Link
-                href="#"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-white transition-colors hover:text-rbGray"
-              >
-                <LogOut className="h-5 w-5" />
-                <span className="sr-only">Logout</span>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent side="right">Sair</TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      </nav>
-    </aside>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Link href="#" className="flex ml-x items-center h-9 w-full px-3 rounded-lg text-white mt-auto">
+              <Bolt className="h-8 w-8" />
+              <span>Configurações</span>
+            </Link>
+          </TooltipTrigger>
+          <TooltipContent side="right">Sair</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    </nav>
   );
-};
+}
 
 export default SideBarWeb;
